@@ -5,12 +5,12 @@ const regd_users = express.Router();
 
 let users = [];
 
-const isValid = (username)=>{ //returns boolean
-//write code to check is the username is valid
+const isValid = (username) => {
+    return users.some(user => user.username === username);
 }
 
-const authenticatedUser = (username,password)=>{ //returns boolean
-//write code to check if username and password match the one we have in records.
+const authenticatedUser = (username, password) => {
+    return users.some(user => user.username === username && user.password === password);
 }
 
 regd_users.post("/register", (req,res) => {
@@ -60,13 +60,15 @@ regd_users.post("/login", (req, res) => {
 regd_users.put("/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
     const review = req.query.review;
-    const username = req.user.username;
+
+    const token = req.session.authorization.accessToken;
+    const decoded = jwt.verify(token, "fingerprint_customer");
+    const username = decoded.username;
 
     if (!books[isbn]) {
         return res.status(404).json({ message: "Book not found" });
     }
 
-    // Agregar o modificar review
     books[isbn].reviews[username] = review;
 
     return res.status(200).json({
@@ -78,7 +80,10 @@ regd_users.put("/review/:isbn", (req, res) => {
 // Delete review
 regd_users.delete("/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
-    const username = req.user.username;
+
+    const token = req.session.authorization.accessToken;
+    const decoded = jwt.verify(token, "fingerprint_customer");
+    const username = decoded.username;
 
     if (!books[isbn]) {
         return res.status(404).json({ message: "Book not found" });

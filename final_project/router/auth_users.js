@@ -53,11 +53,11 @@ regd_users.post("/login", (req, res) => {
         accessToken: accessToken
     };
 
-    return res.status(200).json({ message: "User successfully logged in" });
+    return res.status(200).json({ message: "Login successful!" });
 });
 
 // Add a book review
-regd_users.put("/auth/review/:isbn", (req, res) => {
+regd_users.put("/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
     const review = req.query.review;
     const username = req.user.username;
@@ -69,11 +69,14 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
     // Agregar o modificar review
     books[isbn].reviews[username] = review;
 
-    return res.status(200).json({ message: "Review added/updated successfully" });
+    return res.status(200).json({
+        message: "Review added/updated successfully",
+        reviews: books[isbn].reviews
+    });
 });
 
 // Delete review
-regd_users.delete("/auth/review/:isbn", (req, res) => {
+regd_users.delete("/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
     const username = req.user.username;
 
@@ -83,7 +86,9 @@ regd_users.delete("/auth/review/:isbn", (req, res) => {
 
     if (books[isbn].reviews[username]) {
         delete books[isbn].reviews[username];
-        return res.status(200).json({ message: "Review deleted successfully" });
+        return res.status(200).json({
+            message: `Review for ISBN ${isbn} deleted`
+        });
     }
 
     return res.status(404).json({ message: "No review found for this user" });

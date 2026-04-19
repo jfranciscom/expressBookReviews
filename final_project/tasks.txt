@@ -1,4 +1,16 @@
-TASK 1:
+
+
+
+QUESTION 1:
+
+curl -s https://api.github.com/repos/jfranciscom/expressBookReviews
+ | jq '.parent.full_name'
+"ibm-developer-skills-network/expressBookReviews"
+
+
+############################################################################
+Question 2
+
 curl http://localhost:5000/
 {
     "1": {
@@ -54,34 +66,35 @@ curl http://localhost:5000/
 }
 
 #########################################################################################################
-TASK 2:
+Question 3
 
 curl http://localhost:5000/isbn/1
 {"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}
 
 
 #########################################################################################################
-TASK 3:
+Question 4
 
 curl http://localhost:5000/author/Chinua%20Achebe
 {"1":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}}
 
 
 #########################################################################################################
-TASK 4:
+Question 5
 
 curl http://localhost:5000/title/Things%20Fall%20Apart
 {"1":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}}
 
 
 #########################################################################################################
-TASK 5:
+Question 6
 
 curl http://localhost:5000/review/1
-{"user1":"Great book"}
+{"message":"No reviews found for this book."}
 
 #########################################################################################################
-TASK 6:
+Question 7
+
 
 curl -X POST http://localhost:5000/register \
 -H "Content-Type: application/json" \
@@ -90,40 +103,37 @@ curl -X POST http://localhost:5000/register \
 
 
 #########################################################################################################
-TASK 7:
+Question 8
 
 curl -X POST http://localhost:5000/customer/login \
 -H "Content-Type: application/json" \
 -d '{"username":"user1","password":"pass123"}' \
 -c cookies.txt
-{"message":"User successfully logged in"}
+{"message":"Login successful!"}
 
 
 
 #########################################################################################################
-TASK 8:
+Question 9
 
-curl -X PUT "http://localhost:5000/customer/auth/review/1?review=Great%20book" \
+curl -X PUT "http://localhost:5000/customer/review/1?review=Great%20book" \
 -b cookies.txt
-{"message":"Review added/updated successfully"}
+
+{
+  "message": "Review added/updated successfully",
+  "reviews": {
+    "user1": "Great book"
+  }
+}
 
 #########################################################################################################
-TASK 9:
+Question 10
 
-curl -X DELETE http://localhost:5000/customer/auth/review/1 \
+curl -X DELETE http://localhost:5000/customer/review/1 \
 -b cookies.txt
-{"message":"Review deleted successfully"}
+{"message":"Review for ISBN 1 deleted"}
 
 #########################################################################################################
 TASK 13:
 
 https://github.com/jfranciscom/expressBookReviews/blob/main/final_project/router/general.js
-
-
-#########################################################################################################
-
-TASK 14:
-
-curl -s https://api.github.com/repos/jfranciscom/expressBookReviews
- | jq '.parent.full_name'
-"ibm-developer-skills-network/expressBookReviews"

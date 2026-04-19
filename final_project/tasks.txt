@@ -1,0 +1,116 @@
+TASK 1:
+curl http://localhost:5000/
+{
+    "1": {
+        "author": "Chinua Achebe",
+        "title": "Things Fall Apart",
+        "reviews": {}
+    },
+    "2": {
+        "author": "Hans Christian Andersen",
+        "title": "Fairy tales",
+        "reviews": {}
+    },
+    "3": {
+        "author": "Dante Alighieri",
+        "title": "The Divine Comedy",
+        "reviews": {}
+    },
+    "4": {
+        "author": "Unknown",
+        "title": "The Epic Of Gilgamesh",
+        "reviews": {}
+    },
+    "5": {
+        "author": "Unknown",
+        "title": "The Book Of Job",
+        "reviews": {}
+    },
+    "6": {
+        "author": "Unknown",
+        "title": "One Thousand and One Nights",
+        "reviews": {}
+    },
+    "7": {
+        "author": "Unknown",
+        "title": "Njál's Saga",
+        "reviews": {}
+    },
+    "8": {
+        "author": "Jane Austen",
+        "title": "Pride and Prejudice",
+        "reviews": {}
+    },
+    "9": {
+        "author": "Honoré de Balzac",
+        "title": "Le Père Goriot",
+        "reviews": {}
+    },
+    "10": {
+        "author": "Samuel Beckett",
+        "title": "Molloy, Malone Dies, The Unnamable, the trilogy",
+        "reviews": {}
+    }
+}
+
+#########################################################################################################
+TASK 2:
+
+curl http://localhost:5000/isbn/1
+{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}
+
+
+#########################################################################################################
+TASK 3:
+
+curl http://localhost:5000/author/Chinua%20Achebe
+{"1":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}}
+
+
+#########################################################################################################
+TASK 4:
+
+curl http://localhost:5000/title/Things%20Fall%20Apart
+{"1":{"author":"Chinua Achebe","title":"Things Fall Apart","reviews":{}}}
+
+
+#########################################################################################################
+TASK 5:
+
+curl http://localhost:5000/review/1
+{"user1":"Great book"}
+
+#########################################################################################################
+TASK 6:
+
+curl -X POST http://localhost:5000/register \
+-H "Content-Type: application/json" \
+-d '{"username":"user1","password":"pass123"}'
+{"message":"User successfully registered"}
+
+
+#########################################################################################################
+TASK 7:
+
+curl -X POST http://localhost:5000/customer/login \
+-H "Content-Type: application/json" \
+-d '{"username":"user1","password":"pass123"}' \
+-c cookies.txt
+{"message":"User successfully logged in"}
+
+
+
+#########################################################################################################
+TASK 8:
+
+curl -X PUT "http://localhost:5000/customer/auth/review/1?review=Great%20book" \
+-b cookies.txt
+{"message":"Review added/updated successfully"}
+
+#########################################################################################################
+TASK 9:
+
+curl -X DELETE http://localhost:5000/customer/auth/review/1 \
+-b cookies.txt
+{"message":"Review deleted successfully"}
+
